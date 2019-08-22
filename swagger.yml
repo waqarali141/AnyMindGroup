@@ -1,0 +1,65 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger REST Article
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+
+# Paths supported by the server application
+paths:
+  /hashtags/{hashtag}:
+    get:
+      operationId: "twitterwrapper.search_tweets"
+      parameters:
+        - name: hashtag
+          in: path
+          type: string
+          required: true
+          description: Hashtag to search twitter data against
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description: limit the number of results. Default is 30. Maximum is 200
+
+      tags:
+        - "Twitter"
+      summary: "Fetch Tweets for the given hashtag"
+      description: "Search twitter data against the given Hashtag"
+      responses:
+        200:
+          description: "Successfully returned Results."
+        422:
+          description: "Bad Parameters (Can't return data from twitter against the given parameters)."
+        401:
+          description: "Authentication Error (Couldn't Authenticate the user)."
+
+  /users/{username}:
+    get:
+      operationId: "twitterwrapper.user_tweets"
+      parameters:
+        - name: username
+          in: path
+          type: string
+          required: true
+          description: The name of user for which you want to get twitter data
+        - name: limit
+          in: query
+          type: integer
+          required: false
+          description:  limit the number of results. Default is 30. Maximum is 200
+
+      tags:
+        - "Twitter"
+      summary: "Fetch Tweets from the given username"
+      description: "Returns Tweets from the twitter API for the given User"
+      responses:
+        200:
+          description: "Successfully returned Results."
+        422:
+          description: "Bad Parameters (Can't return data from twitter against the given parameters)."
+        401:
+          description: "Authentication Error (Couldn't Authenticate the user)."
